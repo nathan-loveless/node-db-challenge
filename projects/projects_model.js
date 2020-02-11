@@ -10,18 +10,7 @@ function findProjects() {
 }
 
 function findTasks() {
-    return db('tasks');
-    // const tasks =  db('tasks');
-
-    // tasks.map(task => {
-    //     const projId = db('projects_tasks').where('task_id', task.id);
-    //      const project = db('projects').where('id', projId);
-    //      task.project = project.name;
-    //      task.project_description = project.description; 
-    // })
-
-    // return tasks;
-    //return db('steps as st').join('schemes as sc').select('st.id', 'sc.scheme_name', 'st.step_number', 'st.instructions').where('st.scheme_id', id).where('sc.id', id).orderBy('step_number');
+    return db('tasks').join('projects', 'projects_tasks.project_id', '=', 'projects.id').join('projects_tasks', 'tasks.id', '=', 'projects_tasks.task_id').select('tasks.id', 'tasks.description', 'tasks.notes', 'tasks.is_completed', 'projects.name', 'projects.description as proj_desc');
 }
 
 function addResource(res) {
