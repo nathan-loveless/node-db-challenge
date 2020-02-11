@@ -45,7 +45,11 @@ router.post('/resources', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  Projects.addProject(req.body)
+  const project = req.body;
+
+  if(!('is_completed' in project))
+    project.is_completed = 0;
+  Projects.addProject(project)
   .then(proj => {
     res.json(proj);
   })
@@ -55,7 +59,10 @@ router.post('/', (req, res) => {
 });
 
 router.post('/tasks', (req, res) => {
-  Projects.addTask(req.body)
+  const tasks = req.body;
+  if(!('is_completed' in tasks))
+    tasks.is_completed = 0;
+  Projects.addTask(tasks)
   .then(task => {
     res.json(task);
   })
